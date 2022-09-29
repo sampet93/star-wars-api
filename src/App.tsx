@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="texts" name="search" onChange={handleInput} />
+        <input type="text" name="search" onChange={handleInput} />
         <input type="submit" name="search" />
       </form>
     </div>
