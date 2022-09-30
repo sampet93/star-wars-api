@@ -1,8 +1,14 @@
 import React from "react";
 import FormikSearchForm from "./components/FormikSearchForm";
+import ResultsArea from "./components/ResultsArea";
 
 const App: React.FC = () => {
-  return <FormikSearchForm />;
+  return (
+    <div>
+      <FormikSearchForm />
+      <ResultsArea />
+    </div>
+  );
 };
 
 export default App;
