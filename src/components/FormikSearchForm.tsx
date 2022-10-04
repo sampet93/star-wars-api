@@ -1,19 +1,25 @@
 import React from "react";
 import { getPeople } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
-import { Formik, Form, Field, validateYupSchema } from "formik";
+import { Formik, Form, Field, validateYupSchema, ErrorMessage } from "formik";
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { Stack } from "@mui/system";
+import * as yup from "yup";
 
 interface FormikSearchFormValues {
   search: string;
   searchOption: string;
 }
 
+const searchValidationSchema = yup.object().shape({
+  search: yup.string().required("Search term required"),
+  searchOption: yup.string().required("Search category required"),
+});
+
 const FormikSearchForm: React.FC = () => {
   const { data, error, loading } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const initialValues: FormikSearchFormValues = { search: "", searchOption: "" };
+  const initialValues: FormikSearchFormValues = { search: "", searchOption: "people" };
 
   return (
     <div>
@@ -22,8 +28,11 @@ const FormikSearchForm: React.FC = () => {
         onSubmit={(values, actions) => {
           dispatch(getPeople(values.search));
         }}
+        validateOnChange={true}
+        validateOnMount={false}
+        validationSchema={searchValidationSchema}
       >
-        {({ submitForm, handleChange, values }) => (
+        {({ submitForm, handleChange, values, errors }) => (
           <Form autoComplete="off">
             <Stack spacing={2}>
               <FormControl sx={{ minWidth: 160 }}>
@@ -37,6 +46,7 @@ const FormikSearchForm: React.FC = () => {
                   label="Search For"
                   value={values.searchOption}
                   onChange={handleChange("searchOption")}
+                  helperText={errors.searchOption}
                 >
                   <MenuItem value="people">People</MenuItem>
                   <MenuItem value="planets">Planets</MenuItem>
@@ -52,6 +62,8 @@ const FormikSearchForm: React.FC = () => {
                 placeholder="Enter search term..."
                 value={values.search}
                 onChange={handleChange}
+                helperText={errors.search}
+                error={errors.search}
               />
               <Button variant="outlined" disabled={loading} onClick={submitForm}>
                 Search
