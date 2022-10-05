@@ -4,9 +4,10 @@ import { useAppSelector } from "../hooks/useTypedSelector";
 import PersonIcon from "@mui/icons-material/Person";
 import PublicIcon from "@mui/icons-material/Public";
 import StarIcon from "@mui/icons-material/Star";
+import { SearchOptions } from "../store/types";
 
 const ResultsArea: React.FC = () => {
-  const { data } = useAppSelector((state) => state);
+  const { data, searchOption } = useAppSelector((state) => state);
   return (
     <div>
       <List dense={true}>
@@ -14,7 +15,9 @@ const ResultsArea: React.FC = () => {
           return (
             <ListItem key={key}>
               <ListItemIcon>
-                <PersonIcon />
+                {searchOption !== SearchOptions.PEOPLE || <PersonIcon />}
+                {searchOption !== SearchOptions.PLANET || <PublicIcon />}
+                {searchOption !== SearchOptions.STARSHIP || <StarIcon />}
               </ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItem>

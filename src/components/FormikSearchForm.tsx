@@ -1,14 +1,15 @@
 import React from "react";
-import { getPeople } from "../store/actions";
+import { getData } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
 import { Formik, Form, Field, validateYupSchema, ErrorMessage } from "formik";
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { Stack } from "@mui/system";
 import * as yup from "yup";
+import { SearchOptions } from "../store/types";
 
-interface FormikSearchFormValues {
+export interface FormikSearchFormValues {
   search: string;
-  searchOption: string;
+  searchOption: SearchOptions;
 }
 
 const searchValidationSchema = yup.object().shape({
@@ -19,14 +20,14 @@ const searchValidationSchema = yup.object().shape({
 const FormikSearchForm: React.FC = () => {
   const { data, error, loading } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const initialValues: FormikSearchFormValues = { search: "", searchOption: "people" };
+  const initialValues: FormikSearchFormValues = { search: "", searchOption: SearchOptions.PEOPLE };
 
   return (
     <div>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
-          dispatch(getPeople(values.search));
+          dispatch(getData(values));
         }}
         validateOnChange={true}
         validateOnMount={false}

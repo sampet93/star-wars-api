@@ -1,12 +1,13 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { People } from "../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SearchData, SearchOptions } from "../../types";
 import { ApplicationState } from "../../types";
-import { getPeople } from "../../actions";
+import { getData } from "../../actions";
 
 const initialState: ApplicationState = {
   loading: false,
   data: [],
   error: null,
+  searchOption: SearchOptions.PEOPLE,
 };
 
 const swapiSlice = createSlice({
@@ -15,17 +16,18 @@ const swapiSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getPeople.pending, (state, action) => {
+      .addCase(getData.pending, (state, { meta }) => {
         state.loading = true;
         state.data = [];
+        state.searchOption = meta.arg.searchOption;
         state.error = null;
       })
-      .addCase(getPeople.fulfilled, (state, action: PayloadAction<People[]>) => {
+      .addCase(getData.fulfilled, (state, action: PayloadAction<SearchData[]>) => {
         state.loading = false;
         state.data = (action.payload as any).results;
         state.error = null;
       })
-      .addCase(getPeople.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(getData.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.error = action.payload;
         state.data = [];

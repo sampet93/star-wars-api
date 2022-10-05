@@ -1,12 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { People } from "./types";
+import { SearchData, SearchOptions } from "./types";
 import axios from "axios";
+import { FormikSearchFormValues } from "../components/FormikSearchForm";
 
-export const getPeople = createAsyncThunk("swapi/getPeople", async (data: string, thunkApi) => {
-  try {
-    const response = await axios.get<People[]>(`https://swapi.dev/api/people/?search=${data}`);
-    return response.data;
-  } catch (error: any) {
-    return thunkApi.rejectWithValue(error.message);
+export const getData = createAsyncThunk(
+  "swapi/getData",
+  async (data: FormikSearchFormValues, thunkApi) => {
+    try {
+      const response = await axios.get<SearchData[]>(
+        `https://swapi.dev/api/${data.searchOption}/?search=${data.search}`
+      );
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
   }
-});
+);
