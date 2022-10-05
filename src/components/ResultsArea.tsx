@@ -15,9 +15,11 @@ const ResultsArea: React.FC = () => {
           return (
             <ListItem key={key}>
               <ListItemIcon>
-                {searchOption !== SearchOptions.PEOPLE || <PersonIcon />}
-                {searchOption !== SearchOptions.PLANET || <PublicIcon />}
-                {searchOption !== SearchOptions.STARSHIP || <StarIcon />}
+                <>
+                  {searchOption !== SearchOptions.PEOPLE || <PersonIcon />}
+                  {searchOption !== SearchOptions.PLANET || <PublicIcon />}
+                  {searchOption !== SearchOptions.STARSHIP || <StarIcon />}
+                </>
               </ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItem>

@@ -47,7 +47,6 @@ const FormikSearchForm: React.FC = () => {
                   label="Search For"
                   value={values.searchOption}
                   onChange={handleChange("searchOption")}
-                  helperText={errors.searchOption}
                 >
                   <MenuItem value="people">People</MenuItem>
                   <MenuItem value="planets">Planets</MenuItem>
@@ -64,7 +63,7 @@ const FormikSearchForm: React.FC = () => {
                 value={values.search}
                 onChange={handleChange}
                 helperText={errors.search}
-                error={errors.search}
+                error={errors.search !== undefined}
               />
               <Button variant="outlined" disabled={loading} onClick={submitForm}>
                 Search
