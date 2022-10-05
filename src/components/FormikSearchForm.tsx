@@ -29,8 +29,6 @@ const FormikSearchForm: React.FC = () => {
         onSubmit={(values, actions) => {
           dispatch(getData(values));
         }}
-        validateOnChange={true}
-        validateOnMount={false}
         validationSchema={searchValidationSchema}
       >
         {({ submitForm, handleChange, values, errors }) => (
