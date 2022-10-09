@@ -1,11 +1,12 @@
 import React from "react";
 import { getData } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
-import { Formik, Form, Field, validateYupSchema, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { Stack } from "@mui/system";
 import * as yup from "yup";
 import { SearchOptions } from "../store/types";
+import styled from "@emotion/styled";
 
 export interface FormikSearchFormValues {
   search: string;
@@ -29,6 +30,7 @@ const FormikSearchForm: React.FC = () => {
         onSubmit={(values, actions) => {
           dispatch(getData(values));
         }}
+        validateOnChange={false}
         validationSchema={searchValidationSchema}
       >
         {({ submitForm, handleChange, values, errors }) => (
@@ -52,7 +54,7 @@ const FormikSearchForm: React.FC = () => {
                 </Field>
               </FormControl>
               <Field
-                component={TextField}
+                component={StyledTextField}
                 variant="outlined"
                 label="Search"
                 id="search"
@@ -73,5 +75,13 @@ const FormikSearchForm: React.FC = () => {
     </div>
   );
 };
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      // borderColor: "white",
+    },
+  },
+}));
 
 export default FormikSearchForm;
