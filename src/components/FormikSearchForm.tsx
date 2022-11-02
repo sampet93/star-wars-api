@@ -2,7 +2,14 @@ import React from "react";
 import { getData } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../hooks/useTypedSelector";
 import { Formik, Form, Field } from "formik";
-import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import {
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Stack } from "@mui/system";
 import * as yup from "yup";
 import { SearchOptions } from "../store/types";
@@ -21,7 +28,10 @@ const searchValidationSchema = yup.object().shape({
 const FormikSearchForm: React.FC = () => {
   const { data, error, loading } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
-  const initialValues: FormikSearchFormValues = { search: "", searchOption: SearchOptions.PEOPLE };
+  const initialValues: FormikSearchFormValues = {
+    search: "",
+    searchOption: SearchOptions.PEOPLE,
+  };
 
   return (
     <div>
@@ -65,9 +75,14 @@ const FormikSearchForm: React.FC = () => {
                 helperText={errors.search}
                 error={errors.search !== undefined}
               />
-              <Button variant="outlined" disabled={loading} onClick={submitForm}>
+              <StyledLoadingButton
+                loading={loading}
+                variant="contained"
+                disabled={loading}
+                onClick={submitForm}
+              >
                 Search
-              </Button>
+              </StyledLoadingButton>
             </Stack>
           </Form>
         )}
@@ -82,6 +97,11 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
       // borderColor: "white",
     },
   },
+}));
+
+const StyledLoadingButton = styled(LoadingButton)(({ theme }) => ({
+  borderRadius: 50,
+  maxWidth: 100,
 }));
 
 export default FormikSearchForm;

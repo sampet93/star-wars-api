@@ -7,7 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { SearchOptions } from "../store/types";
 
 const ResultsArea: React.FC = () => {
-  const { data, searchOption } = useAppSelector((state) => state);
+  const { data, loading, searchOption } = useAppSelector((state) => state);
   return (
     <div>
       <List dense={true}>
@@ -22,6 +22,9 @@ const ResultsArea: React.FC = () => {
                 </>
               </ListItemIcon>
               <ListItemText primary={item.name} />
+              {(data.length == 0 && !loading) ?? (
+                <ListItemText primary="No results" />
+              )}
             </ListItem>
           );
         })}

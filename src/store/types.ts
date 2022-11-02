@@ -1,5 +1,7 @@
 export type People = {
   name: string;
+  height: string;
+  mass: string;
 };
 export type Starship = {
   name: string;

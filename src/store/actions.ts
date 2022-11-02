@@ -10,7 +10,6 @@ export const getData = createAsyncThunk(
       const response = await axios.get<SearchData[]>(
         `https://swapi.dev/api/${data.searchOption}/?search=${data.search}`
       );
-
       return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
