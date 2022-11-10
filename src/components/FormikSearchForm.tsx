@@ -69,6 +69,7 @@ const FormikSearchForm: React.FC = () => {
                 label="Search"
                 id="search"
                 name="search"
+                autoFocus
                 placeholder="Enter search term..."
                 value={values.search}
                 onChange={handleChange}
