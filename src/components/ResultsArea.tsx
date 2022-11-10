@@ -1,14 +1,13 @@
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, Alert } from "@mui/material";
 import React from "react";
+import { useRef } from "react";
 import { useAppSelector } from "../hooks/useTypedSelector";
-import PersonIcon from "@mui/icons-material/Person";
-import PublicIcon from "@mui/icons-material/Public";
-import StarIcon from "@mui/icons-material/Star";
-import { SearchOptions } from "../store/types";
 import ResultsListItem from "./ResultsListItem";
 
 const ResultsArea: React.FC = () => {
   const { data, loading, searchOption } = useAppSelector((state) => state);
+  const showError = useRef(false);
+
   return (
     <div>
       <List dense={true}>
@@ -22,6 +21,9 @@ const ResultsArea: React.FC = () => {
           );
         })}
       </List>
+      {!loading && data.length === 0 && !showError ? (
+        <Alert severity="error">No search results :/</Alert>
+      ) : null}
     </div>
   );
 };
