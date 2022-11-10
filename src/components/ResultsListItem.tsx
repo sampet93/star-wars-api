@@ -28,9 +28,15 @@ export default function ResultsListItem(props: ListItemProps) {
     <ListItem key={key}>
       <ListItemIcon>
         <>
-          {searchOption !== SearchOptions.PEOPLE || <PersonIcon />}
-          {searchOption !== SearchOptions.PLANET || <PublicIcon />}
-          {searchOption !== SearchOptions.STARSHIP || <StarIcon />}
+          {searchOption !== SearchOptions.PEOPLE || (
+            <PersonIcon color="primary" />
+          )}
+          {searchOption !== SearchOptions.PLANET || (
+            <PublicIcon color="primary" />
+          )}
+          {searchOption !== SearchOptions.STARSHIP || (
+            <StarIcon color="primary" />
+          )}
         </>
       </ListItemIcon>
       <ListItemText primary={item.name} />
